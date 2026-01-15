@@ -1,8 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
-import { Role } from "@/types";
+import React, { useEffect, useState } from "react";
+import { registerSchema, RegisterUser, Role } from "@/types";
 import { Illustrations } from "@/constants";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Eye, EyeOff } from "lucide-react";
 
 interface LoginProps {
   onLogin: (role: Role, name?: string) => void;
@@ -11,25 +14,43 @@ interface LoginProps {
 type AuthView = "role-select" | "auth-form";
 type AuthMode = "login" | "signup";
 
-const Login: React.FC<LoginProps> = ({ onLogin }) => {
+const Login = ({ onLogin }: LoginProps) => {
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [view, setView] = useState<AuthView>("role-select");
   const [mode, setMode] = useState<AuthMode>("login");
   const [role, setRole] = useState<Role>(Role.OFFICER);
-
-  // Form State
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
   const handleRoleSelect = (selectedRole: Role) => {
     setRole(selectedRole);
     setView("auth-form");
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Simulate auth logic
-    onLogin(role, mode === "signup" ? name : undefined);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+    setValue,
+  } = useForm<RegisterUser>({
+    resolver: zodResolver(registerSchema),
+    mode: "onChange",
+    defaultValues: {
+      fullName: "",
+      email: "",
+      password: "",
+      role: Role.OFFICER,
+    },
+  });
+
+  useEffect(() => {
+    setValue("role", role);
+  }, [role, setValue]);
+
+  const onSubmit = async (data: RegisterUser) => {
+    console.log("Form submitted successfully:", data);
+
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+    reset();
   };
 
   return (
@@ -133,53 +154,111 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                   </p>
                 </header>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  noValidate
+                  className="space-y-4"
+                >
+                  <input type="hidden" {...register("role")} />
                   {mode === "signup" && (
                     <div className="space-y-1">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">
+                      <label
+                        htmlFor="fullName"
+                        className="text-[10px] font-black uppercase tracking-widest text-zinc-500"
+                      >
                         Full Name
                       </label>
                       <input
-                        required
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        type="text"
+                        {...register("fullName")}
+                        // required
+                        id="fullName"
+                        name="fullName"
+                        // value={name}
+                        // onChange={(e) => setName(e.target.value)}
                         className="w-full p-4 border-2 border-black font-bold outline-none rounded-xl focus:bg-zinc-50"
                         placeholder="Officer John Doe"
                       />
+                      {errors.fullName && (
+                        <p className="text-red-500 text-xs mt-1">
+                          {errors.fullName.message}
+                        </p>
+                      )}
                     </div>
                   )}
                   <div className="space-y-1">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">
+                    <label
+                      htmlFor="email"
+                      className="text-[10px] font-black uppercase tracking-widest text-zinc-500"
+                    >
                       Email Address
                     </label>
                     <input
-                      required
+                      {...register("email")}
+                      // required
+                      id="email"
+                      name="email"
                       type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      // value={email}
+                      // onChange={(e) => setEmail(e.target.value)}
                       className="w-full p-4 border-2 border-black font-bold outline-none rounded-xl focus:bg-zinc-50"
                       placeholder="officer@parkdash.com"
                     />
+                    {errors.email && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors.email.message}
+                      </p>
+                    )}
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">
+                    <label
+                      htmlFor="password"
+                      className="text-[10px] font-black uppercase tracking-widest text-zinc-500"
+                    >
                       Secure Password
                     </label>
-                    <input
-                      required
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="w-full p-4 border-2 border-black font-bold outline-none rounded-xl focus:bg-zinc-50"
-                      placeholder="••••••••"
-                    />
+                    <div className="relative">
+                      <input
+                        {...register("password")}
+                        // required
+                        id="password"
+                        name="password"
+                        type={isPasswordVisible ? "text" : "password"}
+                        // onChange={(e) => setPassword(e.target.value)}
+                        className="w-full p-4 border-2 border-black font-bold outline-none rounded-xl focus:bg-zinc-50"
+                        placeholder="••••••••"
+                      />
+                      <div
+                        onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                        className="absolute inset-y-0 right-3 flex items-center cursor-pointer"
+                      >
+                        {isPasswordVisible ? (
+                          <Eye className="w-4 h-4 text-accent " />
+                        ) : (
+                          <EyeOff className="w-4 h-4 text-accent" />
+                        )}
+                      </div>
+                    </div>
+                    {errors.password && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors.password.message}
+                      </p>
+                    )}
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full bg-[#FACC15] border-4 border-black py-5 font-black text-xl hover:bg-black hover:text-white transition-all duration-300 neo-shadow hover:neo-shadow-none rounded-2xl mt-4"
+                    disabled={isSubmitting}
+                    className="group w-full bg-[#FACC15] border-4 border-black py-5 font-black text-xl hover:bg-black hover:text-white transition-all duration-300 neo-shadow hover:neo-shadow-none rounded-2xl mt-4"
                   >
-                    {mode === "login" ? "AUTHENTICATE" : "CREATE ACCOUNT"}
+                    {/* {isSubmitting && (
+                      <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                    )} */}
+                    {isSubmitting
+                      ?   <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-black group-hover:border-white border-t-transparent group-hover:border-t-black" />
+                      : mode === "login"
+                      ? "AUTHENTICATE"
+                      : "CREATE ACCOUNT"}
                   </button>
                 </form>
 
