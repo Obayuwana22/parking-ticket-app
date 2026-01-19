@@ -1,25 +1,28 @@
 import { z } from "zod";
 
-export const registerSchema = z.object({
-  fullName: z.string().min(2),
-  email: z.string().email(),
-  password: z
+const passwordSchema =  z
     .string()
-    .min(8)
+    .min(8, "Password must be at least 8 characters long")
     .regex(/[A-Z]/, "Must contain an uppercase letter")
     .regex(/[a-z]/, "Must contain a lowercase letter")
     .regex(/[0-9]/, "Must contain a number")
-    .regex(/[@$!%*?&#]/, "Must contain a special character"),
+    .regex(/[@$!%*?&#]/, "Must contain a special character")
+
+export const signupSchema = z.object({
+  name: z.string().min(2),
+  email: z.string().email(),
+  password: passwordSchema,
   role: z.enum(["ADMIN", "OFFICER"]),
 });
 
-// export const loginSchema = z.object({
-//   email: z.string().email(),
-//   password: z.string(),
-// });
+export const loginSchema = z.object({
+  email: z.string().email(),
+  password: passwordSchema,
+  role: z.enum(["ADMIN", "OFFICER"]),
+});
 
-export type RegisterUser = z.infer<typeof registerSchema>;
-// export type loginUser = z.infer<typeof loginSchema>
+export type SignupUser = z.infer<typeof signupSchema>;
+export type loginUser = z.infer<typeof loginSchema>
 
 export enum Role {
   ADMIN = "ADMIN",
