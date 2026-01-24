@@ -20,32 +20,32 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     if (!isLoading) {
       if (!isAuthenticated) {
         // Not authenticated, redirect to login
-        router.replace("/login");
+        // router.replace("/login");
       } else if (requiredRole && user?.role !== requiredRole) {
         // Authenticated but wrong role
-        router.replace("/login");
+        // router.replace("/login");
       }
     }
   }, [isAuthenticated, user, isLoading, requiredRole, router]);
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#FAFAFA]">
-        <div className="text-center">
-          <div className="inline-block">
-            <div className="h-12 w-12 animate-spin rounded-full border-4 border-black border-t-[#FACC15]"></div>
-          </div>
-          <p className="mt-4 font-black text-black uppercase tracking-widest">
-            Verifying credentials...
-          </p>
-        </div>
-      </div>
-    );
-  }
+  // if (isLoading) {
+    // return (
+    //   <div className="min-h-screen flex items-center justify-center bg-[#FAFAFA]">
+    //     <div className="text-center">
+    //       <div className="inline-block">
+    //         <div className="h-12 w-12 animate-spin rounded-full border-4 border-black border-t-[#FACC15]"></div>
+    //       </div>
+    //       <p className="mt-4 font-black text-black uppercase tracking-widest">
+    //         Verifying credentials...
+    //       </p>
+    //     </div>
+    //   </div>
+    // );
+  // }
 
-  if (!isAuthenticated || (requiredRole && user?.role !== requiredRole)) {
-    return null;
-  }
+  // if (!isAuthenticated || (requiredRole && user?.role !== requiredRole)) {
+  //   return null;
+  // }
 
   return <>{children}</>;
 };

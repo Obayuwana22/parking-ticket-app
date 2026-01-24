@@ -1,3 +1,4 @@
+"use client"
 
 import React, { useState } from 'react';
 import { User, VehicleType, Ticket, TicketStatus } from '@/types';
@@ -46,27 +47,27 @@ const Tickets: React.FC<TicketsProps> = ({ user }) => {
     <div className="max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
         <div>
-          <h2 className="text-5xl font-black tracking-tighter uppercase">Violations</h2>
+          <h2 className="text-4xl md:text-5xl font-black tracking-tighter uppercase">Violations</h2>
           <p className="text-zinc-500 font-bold">Manage and issue parking citations in real-time.</p>
         </div>
         <button 
           onClick={() => setShowForm(!showForm)}
-          className="bg-[#FACC15] text-black px-10 py-4 font-black text-lg border-2 border-black neo-shadow hover:neo-shadow-none transition-all"
+          className="bg-[#FACC15] text-black px-8 md:px-10 py-4 font-black text-base md:text-lg border-2 border-black neo-shadow hover:neo-shadow-none transition-all w-full md:w-auto"
         >
           {showForm ? 'CANCEL FILING' : 'NEW VIOLATION'}
         </button>
       </div>
 
       {showForm && (
-        <div className="border-4 border-black p-8 mb-12 bg-white neo-shadow-lg rounded-2xl animate-in fade-in zoom-in duration-200">
-          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="border-4 border-black p-6 md:p-8 mb-12 bg-white neo-shadow-lg rounded-2xl animate-in fade-in zoom-in duration-200">
+          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             <div className="space-y-2">
               <label className="block text-xs font-black uppercase text-zinc-400">License Plate</label>
               <input 
                 required
                 value={plate}
                 onChange={e => setPlate(e.target.value)}
-                className="w-full p-4 border-2 border-black font-black text-2xl uppercase focus:bg-zinc-50 outline-none rounded-lg"
+                className="w-full p-4 border-2 border-black font-black text-xl md:text-2xl uppercase focus:bg-zinc-50 outline-none rounded-lg"
                 placeholder="ABC-1234"
               />
             </div>
@@ -75,7 +76,7 @@ const Tickets: React.FC<TicketsProps> = ({ user }) => {
               <select 
                 value={type}
                 onChange={e => setType(e.target.value as VehicleType)}
-                className="w-full p-4 border-2 border-black font-black text-lg uppercase outline-none rounded-lg appearance-none bg-white"
+                className="w-full p-4 border-2 border-black font-black text-base md:text-lg uppercase outline-none rounded-lg appearance-none bg-white"
               >
                 <option value={VehicleType.CAR}>CAR</option>
                 <option value={VehicleType.BIKE}>BIKE</option>
@@ -87,17 +88,17 @@ const Tickets: React.FC<TicketsProps> = ({ user }) => {
               <select 
                 value={zoneId}
                 onChange={e => setZoneId(e.target.value)}
-                className="w-full p-4 border-2 border-black font-black text-lg uppercase outline-none rounded-lg bg-white"
+                className="w-full p-4 border-2 border-black font-black text-base md:text-lg uppercase outline-none rounded-lg bg-white"
               >
                 {MOCK_ZONES.map(z => <option key={z.id} value={z.id}>{z.name}</option>)}
               </select>
             </div>
-            <div className="lg:col-span-3 flex items-center justify-between pt-6 border-t-2 border-zinc-100">
+            <div className="lg:col-span-3 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-6 border-t-2 border-zinc-100">
               <div className="flex gap-4 items-center">
                  <span className="text-xs font-black uppercase text-zinc-400">Calculated Fine</span>
-                 <span className="text-4xl font-black">${calculatePrice(zoneId, type).toFixed(2)}</span>
+                 <span className="text-3xl md:text-4xl font-black">${calculatePrice(zoneId, type).toFixed(2)}</span>
               </div>
-              <button className="bg-black text-white px-12 py-5 font-black text-xl hover:bg-[#FACC15] hover:text-black transition-colors rounded-xl border-2 border-black">
+              <button className="bg-black text-white px-10 md:px-12 py-4 md:py-5 font-black text-lg md:text-xl hover:bg-[#FACC15] hover:text-black transition-colors rounded-xl border-2 border-black">
                 ISSUE CITATION
               </button>
             </div>
@@ -107,26 +108,26 @@ const Tickets: React.FC<TicketsProps> = ({ user }) => {
 
       <div className="grid grid-cols-1 gap-4">
         {tickets.map(t => (
-          <div key={t.id} className="bg-white border-2 border-black p-6 flex flex-col md:flex-row items-center justify-between gap-6 hover:translate-x-1 transition-transform cursor-pointer rounded-xl neo-shadow">
-            <div className="flex items-center gap-6 w-full md:w-auto">
-              <div className="w-16 h-16 bg-zinc-50 border-2 border-black rounded-lg flex items-center justify-center grayscale">
+          <div key={t.id} className="bg-white border-2 border-black p-5 md:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 md:gap-6 hover:translate-x-1 transition-transform cursor-pointer rounded-xl neo-shadow">
+            <div className="flex items-center gap-4 md:gap-6 w-full sm:w-auto">
+              <div className="w-12 h-12 md:w-16 md:h-16 bg-zinc-50 border-2 border-black rounded-lg flex items-center justify-center grayscale shrink-0">
                  <Illustrations.TicketIcon />
               </div>
-              <div>
-                <h4 className="text-2xl font-black tracking-tighter">{t.vehiclePlate}</h4>
+              <div className="flex-1 min-w-0">
+                <h4 className="text-xl md:text-2xl font-black tracking-tighter truncate">{t.vehiclePlate}</h4>
                 <div className="flex gap-2 items-center mt-1">
                   <span className="text-[10px] font-black uppercase bg-zinc-100 px-2 py-0.5 rounded border border-zinc-200">{t.vehicleType}</span>
-                  <span className="text-[10px] font-bold text-zinc-400 uppercase">{t.zoneName}</span>
+                  <span className="text-[10px] font-bold text-zinc-400 uppercase truncate">{t.zoneName}</span>
                 </div>
               </div>
             </div>
             
-            <div className="flex items-center gap-8 w-full md:w-auto justify-between md:justify-end">
+            <div className="flex items-center gap-4 md:gap-8 w-full sm:w-auto justify-between sm:justify-end">
               <div className="text-right">
                 <p className="text-[10px] font-black uppercase text-zinc-400">Officer: {t.issuedBy}</p>
-                <p className="text-2xl font-black">${t.amount.toFixed(2)}</p>
+                <p className="text-xl md:text-2xl font-black">${t.amount.toFixed(2)}</p>
               </div>
-              <div className={`px-4 py-2 border-2 border-black font-black text-xs rounded-lg ${t.status === 'PAID' ? 'bg-green-100' : 'bg-[#FACC15]'}`}>
+              <div className={`px-3 md:px-4 py-2 border-2 border-black font-black text-xs rounded-lg shrink-0 ${t.status === 'PAID' ? 'bg-green-100' : 'bg-[#FACC15]'}`}>
                 {t.status}
               </div>
             </div>

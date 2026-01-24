@@ -5,11 +5,9 @@ import React from "react";
 const NavItem = ({
   to,
   label,
-  icon,
 }: {
   to: string;
   label: string;
-  icon?: React.ReactNode;
 }) => {
   const pathname = usePathname();
   const isActive = pathname === to;
@@ -18,7 +16,7 @@ const NavItem = ({
     <div>
       <Link
         href={to}
-        className={`flex items-center gap-3 py-4 px-6 mx-4 my-1 rounded-xl font-bold transition-all border-2 border-transparent ${
+        className={`flex items-center justify-start gap-3 py-4 px-6 mx-4 my-1 rounded-xl font-bold transition-all border-2 border-transparent ${
           isActive
             ? "bg-black text-white neo-shadow translate-x-1 border-black"
             : "text-zinc-600 hover:text-black hover:bg-zinc-100"
