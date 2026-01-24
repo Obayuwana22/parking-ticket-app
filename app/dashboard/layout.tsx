@@ -62,7 +62,7 @@ export default function MainLayout({
           />
         )}
 
-        <main className="flex-1 pt-16 md:pt-0 p-4 md:p-6 lg:p-8 bg-[#FAFAFA] overflow-auto max-h-screen">
+        <main className="flex-1 pt-28 md:pt-0 p-4 md:p-6 lg:p-8 bg-[#FAFAFA] overflow-auto max-h-screen">
           {children}
         </main>
       </div>

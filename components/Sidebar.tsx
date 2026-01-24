@@ -18,7 +18,7 @@ const Sidebar: React.FC<SidebarProps> = ({ user, onLogout, isOpen, onClose }) =>
       transition-transform duration-300 ease-in-out
       ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
     `}>
-      <div className="p-6 md:p-8 flex flex-col items-center border-b-2 border-zinc-100">
+      <div className="hidden p-6 md:p-8 md:flex flex-col items-center border-b-2 border-zinc-100">
         <div className="w-16 h-16 bg-[#FACC15] border-4 border-black rounded-2xl flex items-center justify-center neo-shadow transform -rotate-3 mb-4">
           <span className="text-3xl font-black">P</span>
         </div>
@@ -27,7 +27,7 @@ const Sidebar: React.FC<SidebarProps> = ({ user, onLogout, isOpen, onClose }) =>
         </h1>
       </div>
 
-      <nav className="flex-1 pt-8" onClick={onClose}>
+      <nav className="flex-1 pt-28 md:pt-8" onClick={onClose}>
         <NavItem to="/dashboard/commands" label="Command" />
         <NavItem to="/dashboard/tickets" label="Tickets" />
         <NavItem to="/dashboard/zones" label="Zones" />
