@@ -60,6 +60,7 @@ ParkWell aims to be the **go-to platform for modern parking enforcement**, combi
 
 * **Framework:** Next.js 16 (App Router)
 * **Frontend:** React 19, TypeScript
+* **Backend:** Nodejs, Express
 * **Styling:** Tailwind CSS 4
 * **Form Management:** React Hook Form + Zod validation
 * **HTTP Client:** Axios
@@ -97,8 +98,8 @@ ParkWell embraces a **clean, professional, and efficient** design approach:
 
 ## 🔗 Links
 
-* 🌐 Website: [park-well.vercel.app](https://park-well.vercel.app/)
-* 📧 Contact: [Your Email]
+* 🌐 X: [its_success](https://x.com/its_success)
+* 📧 Email: [Your Email](successobayuwana85@gmail.com)
 * 💼 GitHub: [Obayuwana22](https://github.com/Obayuwana22)
 
 ---
@@ -106,7 +107,7 @@ ParkWell embraces a **clean, professional, and efficient** design approach:
 ## 🎯 Vision
 
 ParkWell is more than a ticketing system — it's a **complete parking enforcement solution**.
-Designed for efficiency. Built for reliability. Trusted by parking authorities.
+Designed for efficiency. Built for reliability.
 
 ---
 
