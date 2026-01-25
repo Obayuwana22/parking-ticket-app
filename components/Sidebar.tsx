@@ -23,7 +23,7 @@ const Sidebar: React.FC<SidebarProps> = ({ user, onLogout, isOpen, onClose }) =>
           <span className="text-3xl font-black">P</span>
         </div>
         <h1 className="text-2xl font-black tracking-tighter text-center">
-          PARK<span className="text-[#FACC15]">DASH</span>
+          PARK<span className="text-[#FACC15]">WELL</span>
         </h1>
       </div>
 

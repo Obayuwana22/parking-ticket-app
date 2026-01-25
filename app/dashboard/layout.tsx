@@ -35,7 +35,7 @@ export default function MainLayout({
               <span className="text-xl font-black">P</span>
             </div>
             <h1 className="text-lg font-black tracking-tighter">
-              PARK<span className="text-[#FACC15]">DASH</span>
+              PARK<span className="text-[#FACC15]">WELL</span>
             </h1>
           </div>
           
